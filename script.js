@@ -17,23 +17,34 @@ let insertTaskToTable = (taskNumber, taskName) => {
     const tdTask = document.createElement("td");
 
     const tdTaskConfig = document.createElement("td");
-    const tdDelTaskButton = document.createElement("button");
-    tdDelTaskButton.setAttribute("onclick","deleteTask(this)");
-    tdDelTaskButton.innerText = "❌";
-    const tdResolveTaskButton = document.createElement("button");
-    tdResolveTaskButton.setAttribute("onclick","resolveTask(this)") ;
-    tdResolveTaskButton.innerText = "✅";
-    tdTaskConfig.appendChild(tdResolveTaskButton);
-    tdTaskConfig.appendChild(tdDelTaskButton);
+        const divTaskFinish = document.createElement("div");
+            const tdCancelTaskButton = document.createElement("button");
+            tdCancelTaskButton.setAttribute("name","cancelTaskButton");
+            tdCancelTaskButton.setAttribute("onclick","finishTask(this)");
+            tdCancelTaskButton.innerText = "❌";
+            const tdResolveTaskButton = document.createElement("button");
+            tdResolveTaskButton.setAttribute("name","resolveTaskButton");
+            tdResolveTaskButton.setAttribute("onclick","finishTask(this)") ;
+            tdResolveTaskButton.innerText = "✅";
+        divTaskFinish.appendChild(tdResolveTaskButton);
+        divTaskFinish.appendChild(tdCancelTaskButton);
+        const tdDeleteTaskButton = document.createElement("button");
+        tdDeleteTaskButton.setAttribute("onclick","deleteTask(this)") ;
+        tdDeleteTaskButton.innerText = "🗑️";
+    tdTaskConfig.appendChild(divTaskFinish);
+    tdTaskConfig.appendChild(tdDeleteTaskButton);
 
     const tdTaskStatus = document.createElement("td");
     tdTaskStatus.innerText = "To Do";
-
+    const tdTaskCreated = document.createElement("td");
+    tdTaskCreated.innerText = getCurrentDatetime();
+    
     tdNum.innerText = taskNumber;
     tdTask.innerText = taskName;
     row.appendChild(tdNum);
     row.appendChild(tdTask);
     row.appendChild(tdTaskStatus);
+    row.appendChild(tdTaskCreated);
     row.appendChild(document.createElement("td"));
     row.appendChild(tdTaskConfig);
     document.getElementById("tasktable").appendChild(row);
@@ -50,12 +61,15 @@ let getCurrentDatetime = () => {
     return dateTime
 }
 
-let resolveTask = (button) => {
-    console.log(getCurrentDatetime())
+let finishTask = (button) => {
+    // console.log(getCurrentDatetime())
     let tab = document.getElementById('tasktable');
-    tab.rows[button.parentNode.parentNode.rowIndex].cells[document.getElementById("taskEndedCol").cellIndex].innerText = getCurrentDatetime();
-    tab.rows[button.parentNode.parentNode.rowIndex].cells[document.getElementById("taskStatusCol").cellIndex].innerText = "Completed";
-    button.remove();
+    tab.rows[button.parentNode.parentNode.parentNode.rowIndex].cells[document.getElementById("taskEndedCol").cellIndex].innerText = getCurrentDatetime();
+    // console.log(button.name);
+    let finishedStatus = "Completed";
+    if (button.name == "cancelTaskButton") {finishedStatus = "Cancelled"};
+    tab.rows[button.parentNode.parentNode.parentNode.rowIndex].cells[document.getElementById("taskStatusCol").cellIndex].innerText = finishedStatus;
+    button.parentNode.remove();
 }
 
 let deleteTask = (button) => {

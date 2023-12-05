@@ -38,13 +38,16 @@ let insertTaskToTable = (taskNumber, taskName) => {
     tdTaskStatus.innerText = "To Do";
     const tdTaskCreated = document.createElement("td");
     tdTaskCreated.innerText = getCurrentDatetime();
-    
+    const tdTaskDeadline = document.createElement("input");
+    tdTaskDeadline.setAttribute("type","date");
+
     tdNum.innerText = taskNumber;
     tdTask.innerText = taskName;
     row.appendChild(tdNum);
     row.appendChild(tdTask);
     row.appendChild(tdTaskStatus);
     row.appendChild(tdTaskCreated);
+    row.appendChild(tdTaskDeadline);
     row.appendChild(document.createElement("td"));
     row.appendChild(tdTaskConfig);
     document.getElementById("tasktable").appendChild(row);

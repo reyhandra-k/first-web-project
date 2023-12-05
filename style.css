@@ -24,7 +24,7 @@ label {
 
 table {
     border-collapse: collapse;
-    width: 70%;
+    width: 100%;
 }
 
 th, td {
@@ -35,5 +35,9 @@ th, td {
 
 #tasktable {
     margin-top: 10px;
+}
+
+#taskNoCol {
+    width: 15px;
 }
 
